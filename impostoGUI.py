@@ -1,3 +1,5 @@
+# Interface Gráfica
+
 import PySimpleGUI as psg
 def calcular_imposto(salario_bruto, num_dependentes):
 
