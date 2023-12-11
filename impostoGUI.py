@@ -50,14 +50,14 @@ layout = [
 janela = psg.Window('Calculadora de Imposto de Renda', layout)
 
 while True:
-    event, values = janela.read()
+    evento, valores = janela.read()
 
-    if event == psg.WINDOW_CLOSED or event == 'Fechar':
+    if evento == psg.WINDOW_CLOSED or evento == 'Fechar':
         break
-    elif event == 'Calcular':
+    elif evento == 'Calcular':
         try:
-            salario_bruto = float(values['salario_bruto'])
-            num_dependentes = int(values['num_dependentes'])
+            salario_bruto = float(valores['salario_bruto'])
+            num_dependentes = int(valores['num_dependentes'])
         except ValueError:
             psg.popup_error('Por favor, insira valores válidos para salário bruto e número de dependentes.')
             continue
@@ -78,7 +78,7 @@ while True:
 
         janela['output'].update(output_text)
 
-    elif event == 'Limpar':
+    elif evento == 'Limpar':
         janela['salario_bruto'].update('')
         janela['num_dependentes'].update('')
         janela['output'].update('')
