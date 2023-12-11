@@ -1,6 +1,5 @@
-# Interface Gráfica
-
 import PySimpleGUI as psg
+
 def calcular_imposto(salario_bruto, num_dependentes):
 
     desc_dependentes = 189.59 * num_dependentes
@@ -39,7 +38,6 @@ def calcular_imposto(salario_bruto, num_dependentes):
         'aliquota_efetiva': aliquota_efetiva,
     }
 
-
 psg.theme('lightgray1')
 
 layout = [
@@ -57,17 +55,25 @@ while True:
     if event == psg.WINDOW_CLOSED or event == 'Fechar':
         break
     elif event == 'Calcular':
-        salario_bruto = float(values['salario_bruto'])
-        num_dependentes = int(values['num_dependentes'])
+        try:
+            salario_bruto = float(values['salario_bruto'])
+            num_dependentes = int(values['num_dependentes'])
+        except ValueError:
+            psg.popup_error('Por favor, insira valores válidos para salário bruto e número de dependentes.')
+            continue
+
+        if salario_bruto < 0 or num_dependentes < 0:
+            psg.popup_error('Por favor, insira valores não negativos para salário bruto e número de dependentes.')
+            continue
 
         resultado = calcular_imposto(salario_bruto, num_dependentes)
 
         output_text = (
-            f'Salário base: R${resultado['salario_base']:.2f}\n'
-            f'Alíquota: {resultado['aliquota'] * 100:.1f}%\n'
-            f'IR Devido: R${resultado['ir_devido']:.2f}\n'
-            f'Salário Líquido: R${resultado['salario_liquido']:.2f}\n'
-            f'Alíquota Efetiva: {resultado['aliquota_efetiva'] * 100:.2f}%'
+            f'Salário base: R${resultado["salario_base"]:.2f}\n'
+            f'Alíquota: {resultado["aliquota"] * 100:.1f}%\n'
+            f'IR Devido: R${resultado["ir_devido"]:.2f}\n'
+            f'Salário Líquido: R${resultado["salario_liquido"]:.2f}\n'
+            f'Alíquota Efetiva: {resultado["aliquota_efetiva"] * 100:.2f}%'
         )
 
         janela['output'].update(output_text)
